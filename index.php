@@ -67,7 +67,9 @@ if (isset($_POST['ip'])) {
          ?>
         <form action="" method="post">
           <input class="textbox" type="text" name="ip" placeholder="<?php echo $_SERVER['REMOTE_ADDR']; ?>">
+          <div class="buttonwrap">
           <button class="button" type="submit" name="submit">Enter</button>
+        </div>>
         </form>
       </div>
     </div>
