@@ -26,6 +26,13 @@ if (isset($_POST['ip'])) {
   $city = $data['city'];
   $zip = $data['zip'];
   $isp = $data['isp'];
+  if ($country == "United States") {
+    $rn = "State: ";
+  } elseif($country == "Canada") {
+    $rn = "Province: ";
+  } else {
+    $rn = "Region: ";
+  }
 }
 
 ?>
@@ -56,7 +63,7 @@ if (isset($_POST['ip'])) {
           if ($status == "success") {
             echo '<p class="title">'.$ip.'</p>';
             echo '<p class="info">Country: '.$country.'</p>';
-            echo '<p class="info">Region: '.$region.'</p>';
+            echo '<p class="info">'.$rn.''.$region.'</p>';
             echo '<p class="info">City: '.$city.'</p>';
             echo '<p class="info">ZIP: '.$zip.'</p>';
             echo '<p class="info">ISP: '.$isp.'</p>';
@@ -67,9 +74,7 @@ if (isset($_POST['ip'])) {
          ?>
         <form action="" method="post">
           <input class="textbox" type="text" name="ip" placeholder="<?php echo $_SERVER['REMOTE_ADDR']; ?>">
-          <div class="buttonwrap">
           <button class="button" type="submit" name="submit">Enter</button>
-        </div>>
         </form>
       </div>
     </div>
