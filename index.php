@@ -1,39 +1,44 @@
 <?php
-
-
 if (isset($_POST['ip'])) {
   $ip = $_POST['ip'];
-  $url = 'http://ip-api.com/json/'.$ip.'?fields=16953';
-  $json = file_get_contents($url);
-  $data = json_decode($json, true);
 
-  $status = $data['status'];
-  $country = $data['country'];
-  $region = $data['regionName'];
-  $city = $data['city'];
-  $zip = $data['zip'];
-  $isp = $data['isp'];
-} else {
+  if(filter_var($ip, FILTER_VALIDATE_IP)) {
 
-  $ip = $_SERVER['REMOTE_ADDR'];
-  $url = 'http://ip-api.com/json/'.$ip.'?fields=16953';
-  $json = file_get_contents($url);
-  $data = json_decode($json, true);
+    $url = 'http://ip-api.com/json/'.$ip.'?fields=16953';
+    $json = file_get_contents($url);
+    $data = json_decode($json, true);
 
-  $status = $data['status'];
-  $country = $data['country'];
-  $region = $data['regionName'];
-  $city = $data['city'];
-  $zip = $data['zip'];
-  $isp = $data['isp'];
-  if ($country == "United States") {
-    $rn = "State: ";
-  } elseif($country == "Canada") {
-    $rn = "Province: ";
+    $status = $data['status'];
+    $country = $data['country'];
+    $region = $data['regionName'];
+    $city = $data['city'];
+    $zip = $data['zip'];
+    $isp = $data['isp'];
   } else {
-    $rn = "Region: ";
+    $status = "invalidip";
   }
-}
+} else {
+    $ip = $_SERVER['REMOTE_ADDR'];
+    $url = 'http://ip-api.com/json/'.$ip.'?fields=16953';
+    $json = file_get_contents($url);
+    $data = json_decode($json, true);
+
+    $status = $data['status'];
+    $country = $data['country'];
+    $region = $data['regionName'];
+    $city = $data['city'];
+    $zip = $data['zip'];
+    $isp = $data['isp'];
+
+    if ($country == "United States") {
+      $rn = "State: ";
+    } elseif($country == "Canada") {
+      $rn = "Province: ";
+    } else {
+      $rn = "Region: ";
+    }
+  }
+
 
 ?>
 <!DOCTYPE html>
@@ -41,13 +46,12 @@ if (isset($_POST['ip'])) {
   <head>
     <link rel="stylesheet" href="main.css">
     <meta charset="utf-8">
-    <title></title>
+    <title>geoip</title>
   </head>
   <body>
     <div class="wrap-out">
       <div clas="wrap-in">
         <?php
-        if (isset($_POST['submit'])){
           if ($status == "success") {
             echo '<p class="title">'.$ip.'</p>';
             echo '<p class="info">Country: '.$country.'</p>';
@@ -55,26 +59,15 @@ if (isset($_POST['ip'])) {
             echo '<p class="info">City: '.$city.'</p>';
             echo '<p class="info">ZIP: '.$zip.'</p>';
             echo '<p class="info">ISP: '.$isp.'</p>';
+          } elseif($status == "invalidip"){
+              echo '<p class="title">Invalid IP</p>';
           } else {
-              echo '<p class="title">Invalid response</p>';
+              echo '<p class="title">Invalid Response</p>';
           }
-        }
-        else {
-          if ($status == "success") {
-            echo '<p class="title">'.$ip.'</p>';
-            echo '<p class="info">Country: '.$country.'</p>';
-            echo '<p class="info">'.$rn.''.$region.'</p>';
-            echo '<p class="info">City: '.$city.'</p>';
-            echo '<p class="info">ZIP: '.$zip.'</p>';
-            echo '<p class="info">ISP: '.$isp.'</p>';
-          } else {
-              echo '<p class="title">Invalid response</p>';
-          }
-      }
          ?>
         <form action="" method="post">
-          <input class="textbox" type="text" name="ip" placeholder="<?php echo $_SERVER['REMOTE_ADDR']; ?>">
-          <button class="button" type="submit" name="submit">Enter</button>
+          <input class="textbox unselectable" type="text" name="ip" placeholder="<?php echo $_SERVER['REMOTE_ADDR']; ?>">
+          <button class="button unselectable" type="submit" name="submit">Search</button>
         </form>
       </div>
     </div>

@@ -4,6 +4,12 @@ body {
   color: #333333;
 }
 
+.mcss a {
+    color: #333333;
+    text-decoration: none;
+    background-image: none;
+}
+
 .title {
   color: #333333;
   font-family: Roboto Mono;
@@ -12,24 +18,24 @@ body {
   text-decoration: none;
   text-align: center;
   float: inherit;
-  transition: 1s;
+  transition: 3s;
   transform: translate(0,0px);
+  margin-top: 10%;
 }
 
 .wrap-out {
-  align-items: center;
   text-align: center;
-  margin-top: 15%;
-  float: none;
-  max-width: 100%;
-  width: 100%;
 }
 
 .wrap-in {
   display: inline-block;
-  margin-top: 15%;
   max-width: 100%;
-  width: 100%;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 }
 
 .info {
@@ -40,7 +46,7 @@ body {
   text-decoration: none;
   text-align: center;
   float: inherit;
-  transition: 1s;
+  transition: 1s ease;
   transform: translate(0,0px);
 }
 
@@ -49,7 +55,7 @@ body {
   background-color: #333;
   border-style: none;
   color: #999;
-  height: 30px;
+  height: 35px;
 }
 
 .button {
@@ -57,12 +63,7 @@ body {
   background-color: #333;
   border-style: none;
   color: #999;
-  height: 32px;
-}
-
-.buttonwrap {
-  width: 40px;
-  height: 30px;
+  height: 37px;
 }
 
 ::selection {
@@ -76,4 +77,11 @@ body {
 
 .title .info:hover {
   font-weight: bold;
+}
+
+.unselectable {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
